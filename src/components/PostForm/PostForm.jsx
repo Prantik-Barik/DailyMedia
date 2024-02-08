@@ -5,6 +5,8 @@ import {Button, Input, Select, RTE} from "../index"
 import { useSelector } from 'react-redux'
 import appwriteService from '../../appwrite/conf'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFeather } from '@fortawesome/free-solid-svg-icons'
 
 export default function PostForm({ post }) 
 {
@@ -46,6 +48,7 @@ export default function PostForm({ post })
                 data.featuredImage = fileId;
                 
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                console.log(userData)
                 console.log(dbPost)
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
@@ -80,6 +83,7 @@ export default function PostForm({ post })
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
+                <FontAwesomeIcon icon={faFeather} />
                 <Input
                     label="Title :"
                     placeholder="Title"
