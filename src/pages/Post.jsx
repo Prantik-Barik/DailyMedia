@@ -4,6 +4,7 @@ import appwriteService from "../appwrite/conf";
 import { Button, Container } from "../components/index";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import { toTitleCase } from '../features/toTitleCase'
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -27,9 +28,9 @@ export default function Post() {
     }, [slug, navigate]);
 
     const deletePost = () => {
-        appwriteService.deletePost(post.$id).then((status) => {
+        appwriteService.deletePost(post.$id).then(async (status) => {
             if (status) {
-                appwriteService.deleteFile(post.featuredImage);
+                await appwriteService.deleteFile(post.featuredImage);
                 navigate("/");
             }
         });
@@ -58,10 +59,10 @@ export default function Post() {
                         </div>
                     )}
                 </div>
-                <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                <div className="w-full my-8 pl-10">
+                    <h1 className="text-3xl font-bold">{toTitleCase(post.title)}</h1>
                 </div>
-                <div className="browser-css">
+                <div className="browser-css font-bold text-2xl pl-10 ">
                     {parse(post.content)}
                     </div>
             </Container>

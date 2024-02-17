@@ -21,6 +21,7 @@ function Login() {
                 const userData = await authService.getCurrentUser()
                 if(userData){
                     dispatch(authLogin(userData))
+                    localStorage.setItem('currentUser', userData.$id)
                 }
                 navigate("/")
             }
@@ -31,7 +32,7 @@ function Login() {
 
   return (
     <div
-    className='flex items-center justify-center w-full'
+    className='flex items-center justify-center w-full font-poppins'
     >
         <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
@@ -44,7 +45,8 @@ function Login() {
                     Don&apos;t have any account?&nbsp;
                     <Link
                         to="/signup"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-primary
+                        transition-all duration-200 text-blue-500 hover:underline"
                     >
                         Sign Up
                     </Link>
@@ -63,7 +65,7 @@ function Login() {
                         "Email address must be a valid address",
                     }
                 })}
-                />
+                className = "hover:ring-2 hover:ring-green-500"/>
                 <Input
                 label="Password: "
                 type="password"
@@ -71,11 +73,11 @@ function Login() {
                 {...register("password",{
                     required: true,
                 })}
-                />
+                className = "hover:ring-2"/>
                 <Button
                 type="submit"
-                className="w-full"
-                >Sign in</Button>
+                className="w-full hover:font-bold hover:text-black"
+                ><span className='font-poppins tracking-wide'>Sign in</span></Button>
             </div>
         </form>
         </div>

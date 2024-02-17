@@ -18,8 +18,10 @@ function Signup() {
             const userData = await authService.createAccount(data)
             if (userData) {
                 const userData = await authService.getCurrentUser()
-                if(userData) dispatch(login(userData));
-                navigate("/")
+                if(userData) {
+                    dispatch(login(userData));
+                    navigate("/")
+                }
             }
         } catch (error) {
             setError(error.message)
@@ -28,7 +30,7 @@ function Signup() {
 
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center w-full font-poppins">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
             <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
@@ -40,7 +42,7 @@ function Signup() {
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-primary transition-all duration-200 hover:underline text-blue-400"
                     >
                         Sign In
                     </Link>
@@ -55,7 +57,7 @@ function Signup() {
                         {...register("name", {
                             required: true,
                         })}
-                        />
+                        className = "hover:ring-2"/>
                         <Input
                         label="Email: "
                         placeholder="Enter your email"
@@ -67,16 +69,20 @@ function Signup() {
                                 "Email address must be a valid address",
                             }
                         })}
-                        />
+                        className = "hover:ring-2"/>
                         <Input
                         label="Password: "
                         type="password"
                         placeholder="Enter your password"
                         {...register("password", {
-                            required: true,})}
-                        />
-                        <Button type="submit" className="w-full">
-                            Create Account
+                            required: true,
+                            validate: {
+                                matchPattern: (value) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(value) || setError('Password must have atleast one uppercase and number')
+                            }
+                        })}
+                        className = "hover:ring-2"/>
+                        <Button type="submit" className="w-full hover:font-bold hover:text-black">
+                            <span className='font-poppins tracking-wide'>Create Account</span>
                         </Button>
                     </div>
                 </form>

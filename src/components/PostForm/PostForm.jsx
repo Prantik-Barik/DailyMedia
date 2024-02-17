@@ -5,8 +5,6 @@ import {Button, Input, Select, RTE} from "../index"
 import { useSelector } from 'react-redux'
 import appwriteService from '../../appwrite/conf'
 import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFeather } from '@fortawesome/free-solid-svg-icons'
 
 export default function PostForm({ post }) 
 {
@@ -16,6 +14,7 @@ export default function PostForm({ post })
             slug : post?.slug || "",
             content: post?.content || "",
             status: post?.status || "active",
+            isPremium: post?.isPremium || "free",
         }
     })
     
@@ -47,7 +46,7 @@ export default function PostForm({ post })
                 const fileId = file.$id;
                 data.featuredImage = fileId;
                 
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.$id });
+                const dbPost = await appwriteService.createPost({ ...data, userId: userData.userData.$id });
                 console.log(userData)
                 console.log(dbPost)
                 if (dbPost) {
@@ -81,12 +80,12 @@ export default function PostForm({ post })
     },[watch, slugTransform, setValue])
     
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap font-poppins text-green-500">
             <div className="w-2/3 px-2">
-                <FontAwesomeIcon icon={faFeather} />
+
                 <Input
                     label="Title :"
-                    placeholder="Title"
+                    placeholder="Blog Title"
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
@@ -99,9 +98,10 @@ export default function PostForm({ post })
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <RTE label="Blog Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
+                
                 <Input
                     label="Featured Image :"
                     type="file"
@@ -118,14 +118,29 @@ export default function PostForm({ post })
                         />
                     </div>
                 )}
-                <Select
-                    options={["active", "inactive"]}
-                    label="Status"
+                
+                <div>
+                    <h1 className='my-3 pl-1 text-lg font-semibold'>Publish : </h1>
+                    <Select
+                        options={["active", "inactive"]}
+                        label="Status"
+                        className="mb-4"
+                        {...register("status", { required: true })}
+                    />
+                </div>
+                
+                <div>
+                    <h1 className='my-3 text-lg font-semibold'>Premium : </h1>
+                    <Select
+                    options={["premium", "free"]}
+                    label="Premium or Free Content"
                     className="mb-4"
-                    {...register("status", { required: true })}
-                />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
+                    {...register("isPremium", { required: true })}
+                    />
+                </div>
+                
+                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full mt-5">
+                    {post ? "Update" : "Save"}
                 </Button>
             </div>
         </form>

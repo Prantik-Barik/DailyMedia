@@ -1,23 +1,24 @@
 import React from 'react'
 import { Editor } from '@tinymce/tinymce-react'
 import { Controller } from 'react-hook-form'
+import config from '../config/config'
 
 export default function RTE(
   {name, control, label, defaultValue =""}) {
   return (
-    <div className='w-full'> 
-    {label && <label className='inline-block mb-1 pl-1'>{label}</label>}
+    <div className='w-full pb-10 pr-5'> 
+    {label && <label className='inline-block my-4 pl-1 text-lg font-semibold'>{label}</label>}
 
     <Controller
     name={name || "content"}
     control={control}
     render={({field: {onChange}}) => (
         <Editor
-        apiKey='8isq7n46k15k9s3pzxrlkalhvuoydk5ut33gzzu8s6hir1nl'
+        apiKey= {config.tinymceapikey}
         initialValue={defaultValue}
         init={{
             initialValue: defaultValue,
-            height: 500,
+            height: 700,
             menubar: true,
             plugins: [
                 "image",
