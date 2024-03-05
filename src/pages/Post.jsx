@@ -5,6 +5,7 @@ import { Button, Container } from "../components/index";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { toTitleCase } from '../features/toTitleCase'
+import { createdAt } from "../features/createdAt";
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -12,14 +13,12 @@ export default function Post() {
     const navigate = useNavigate();
 
     const userData = useSelector((state) => state.auth.userData);
-
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
                 if (post) {
-                    console.log(post);
                     setPost(post);
                 }
                 else navigate("/");
@@ -37,34 +36,38 @@ export default function Post() {
     };
 
     return post ? (
-        <div className="py-8">
+        <div className=" max-w-full mx-auto min-h-screen py-8 font-montserrat">
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
-                        alt={post.title}
-                        className="rounded-xl"
-                    />
+                <div className="w-full my-3 pl-10 flex flex-wrap flex-col gap-3">
+                    <h1 className="text-3xl font-bold text-white ">{toTitleCase(post.title)}</h1>
+                    <p className="text-sm font-bold text-[#dd1b5c]">{createdAt(post.$createdAt)} By {post.userName}</p>
+                </div>
 
-                    {isAuthor && (
-                        <div className="absolute right-6 top-6">
-                            <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-green-500" className="mr-3">
-                                    Edit
+                <div className="flex flex-col justify-center my-10 items-center">
+                    <div className="w-9/12 h-70vh flex justify-center mb-4 relative border rounded-xl p-2">
+                        <img
+                            src={appwriteService.getFilePreview(post.featuredImage)}
+                            alt={post.title}
+                            className="rounded-xl object-cover object-center"
+                        />
+
+                        {isAuthor && (
+                            <div className="absolute right-6 top-6">
+                                <Link to={`/edit-post/${post.$id}`}>
+                                    <Button bgColor="bg-green-500" className="mr-3">
+                                        Edit
+                                    </Button>
+                                </Link>
+                                <Button bgColor="bg-red-500" onClick={deletePost}>
+                                    Delete
                                 </Button>
-                            </Link>
-                            <Button bgColor="bg-red-500" onClick={deletePost}>
-                                Delete
-                            </Button>
-                        </div>
-                    )}
-                </div>
-                <div className="w-full my-8 pl-10">
-                    <h1 className="text-3xl font-bold">{toTitleCase(post.title)}</h1>
-                </div>
-                <div className="browser-css font-bold text-2xl pl-10 ">
-                    {parse(post.content)}
+                            </div>
+                        )}
                     </div>
+                </div>
+                <div className="browser-css text-xl pl-10 text-white py-5">
+                    {parse(post.content)}
+                </div>
             </Container>
         </div>
     ) : null;

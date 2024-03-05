@@ -4,23 +4,22 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck, faEye, faEyeSlash, faSackDollar } from '@fortawesome/free-solid-svg-icons';
 import { toTitleCase } from '../features/toTitleCase'
+import { createdAt } from '../features/createdAt';
 
 function PostCard({$id, title, featuredImage, $createdAt, status, isPremium}) {
+  
   let dateString = $createdAt;
-  var date = new Date(dateString);
-  var options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' };
-  var formattedDate = date.toLocaleDateString('en-US', options).replace(","," ");
-
+  
   return (
     <Link to={`/post/${$id}`}>
-        <div className='w-full h-full bg-gray-100 rounded-xl p-5 hover:ring-4 ring-green-500 transition-all cursor-pointer space-y-5 animate__animated animate__fadeIn first:lg:col-span-2 first:md:col-span-3'>
-            <div className='w-full justify-center mb-4'>
+        <div className='max-w-md overflow-hidden h-full shadow-xl bg-[#38304c] rounded-xl p-5 hover:ring-2 ring-green-500 transition-all cursor-pointer space-y-5 animate__animated animate__fadeIn'>
+            <div className='w-full h-auto justify-center mb-4'>
                 <img src={appwriteService.getFilePreview(featuredImage)} alt={title} className='rounded-xl object-cover h-64 w-full'/>
             </div>
             <div className='flex flex-row space-y-2 justify-between'>
               <div>
-                <h2 className='font-poppins'>{formattedDate}</h2>
-                <h2 className='text-xl font-bold p-2 text-wrap overflow-hidden font-montserrat'>{toTitleCase(title)}</h2>
+                <h2 className='font-poppins font-semibold text-[#564df5]'>{createdAt(dateString)}</h2>
+                <h2 className='text-xl font-bold py-2 text-wrap overflow-hidden font-montserrat text-white'>{toTitleCase(title)}</h2>
               </div>
               <div className='flex flex-col gap-2 items-center justify-center'>
                 { 

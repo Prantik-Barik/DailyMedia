@@ -46,9 +46,7 @@ export default function PostForm({ post })
                 const fileId = file.$id;
                 data.featuredImage = fileId;
                 
-                const dbPost = await appwriteService.createPost({ ...data, userId: userData.userData.$id });
-                console.log(userData)
-                console.log(dbPost)
+                const dbPost = await appwriteService.createPost({ ...data, userId: userData.userData.$id, userName : userData.userData.name });
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
                 }
@@ -80,7 +78,7 @@ export default function PostForm({ post })
     },[watch, slugTransform, setValue])
     
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap font-poppins text-green-500">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap font-poppins text-[#8c8a9c]">
             <div className="w-2/3 px-2">
 
                 <Input
@@ -120,7 +118,7 @@ export default function PostForm({ post })
                 )}
                 
                 <div>
-                    <h1 className='my-3 pl-1 text-lg font-semibold'>Publish : </h1>
+                    <h1 className='my-3 pl-1 text-lg font-semibold text-green-500'>Publish : </h1>
                     <Select
                         options={["active", "inactive"]}
                         label="Status"
@@ -130,7 +128,7 @@ export default function PostForm({ post })
                 </div>
                 
                 <div>
-                    <h1 className='my-3 text-lg font-semibold'>Premium : </h1>
+                    <h1 className='my-3 text-lg font-semibold text-yellow-600'>Premium : </h1>
                     <Select
                     options={["premium", "free"]}
                     label="Premium or Free Content"

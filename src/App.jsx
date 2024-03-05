@@ -5,7 +5,6 @@ import authService from "./appwrite/auth"
 import { login, logout } from './features/authSlice'
 import { Footer, Header } from './components'
 import { Outlet } from 'react-router-dom';
-import { Spin } from 'antd';
 
 function App() {
     const [loading, setLoading ] = useState(true);
@@ -14,7 +13,6 @@ function App() {
     useEffect(()=>{
       authService.getCurrentUser()
       .then((userData)=>{
-        console.log(userData)
         if(userData)
           dispatch(login({userData}))
         else
@@ -24,10 +22,10 @@ function App() {
     }, [])
 
   return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-700'>
-      <div className='w-full block'>
+    <div className='min-h-screen flex flex-wrap content-between'>
+      <div className=' flex flex-col content-between w-full'>
         <Header />
-        <main>
+        <main className="bg-[#201a30]">
           <Outlet />
         </main>
         <Footer />

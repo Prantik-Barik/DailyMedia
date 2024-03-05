@@ -7,7 +7,7 @@ export default function RTE(
   {name, control, label, defaultValue =""}) {
   return (
     <div className='w-full pb-10 pr-5'> 
-    {label && <label className='inline-block my-4 pl-1 text-lg font-semibold'>{label}</label>}
+    {label && <label className='inline-block my-4 pl-1 text-lg font-semibold text-[#634cdd]'>{label}</label>}
 
     <Controller
     name={name || "content"}

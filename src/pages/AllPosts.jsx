@@ -23,11 +23,11 @@ function AllPosts() {
   }
 
     return (
-        <div className='w-full py-8'>
+        <div className='w-full py-8 md:pt-10'>
         <Container>
             <div className='flex flex-wrap'>
                 {posts.map((post) => (
-                    <div key={post.$id} className='p-2 w-1/3'>
+                    <div key={post.$id} className='p-2 sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/3'>
                         <PostCard {...post} />
                     </div>
                 ))}

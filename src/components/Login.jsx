@@ -32,28 +32,28 @@ function Login() {
 
   return (
     <div
-    className='flex items-center justify-center w-full font-poppins'
+    className='flex items-center justify-center w-full font-poppins my-5'
     >
-        <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className={`mx-auto w-full max-w-lg bg-[#38304c] rounded-xl p-10 border border-black/10`}>
         <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
+                    <span className="inline-block w-full max-w-fit">
                         <Logo width="100%" />
                     </span>
         </div>
-        <h2 className="text-center text-2xl font-bold leading-tight">Sign in to your account</h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <h2 className="text-center text-2xl font-bold leading-tight text-[#ffff]">Sign in to your account</h2>
+        <p className="mt-2 text-center text-base text-[#8c8a9c]">
                     Don&apos;t have any account?&nbsp;
                     <Link
                         to="/signup"
                         className="font-medium text-primary
-                        transition-all duration-200 text-blue-500 hover:underline"
+                        transition-all duration-200 hover:underline"
                     >
-                        Sign Up
+                        <span className='text-[#634cdd]'>Sign Up</span>
                     </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
         <form onSubmit={handleSubmit(login)} className='mt-8'>
-            <div className='space-y-5'>
+            <div className='space-y-5 '>
                 <Input
                 label="Email: "
                 placeholder="Enter your email"
@@ -76,8 +76,17 @@ function Login() {
                 className = "hover:ring-2"/>
                 <Button
                 type="submit"
-                className="w-full hover:font-bold hover:text-black"
+                className="w-full hover:font-bold hover:text-black mt-10"
                 ><span className='font-poppins tracking-wide'>Sign in</span></Button>
+                <div className='text-center'>
+                <Link
+                        to="/change-password"
+                        className="font-medium text-primary
+                        transition-all duration-200 hover:underline"
+                >
+                        <span className='text-[#634cdd]'>Forget Password ?</span>
+                    </Link>
+                </div>
             </div>
         </form>
         </div>

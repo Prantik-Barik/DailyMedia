@@ -1,10 +1,11 @@
 import config from "../config/config.js";
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Storage, Query} from "appwrite";
 
 export class Service{
     client = new Client();
     databases;
     bucket;
+    users;
 
     constructor(){
         this.client
@@ -16,7 +17,7 @@ export class Service{
 
     }
 
-    async createPost({title, slug, content, featuredImage, status, isPremium, userId}){
+    async createPost({title, slug, content, featuredImage, status, isPremium, userId, userName}){
         try {
             return await this.databases.createDocument(
                 config.AppwriteDatabaseId,
@@ -27,6 +28,7 @@ export class Service{
                     content,
                     status,
                     userId,
+                    userName,
                     featuredImage,
                     isPremium
                 }
@@ -49,8 +51,9 @@ export class Service{
                     content,
                     featuredImage,
                     status,
+                    isPremium
                 }
-                )
+            )
         } 
         catch (error) {
             console.log("Appwrite service:: updatePost error");
@@ -128,10 +131,14 @@ export class Service{
     }
 
     getFilePreview(fileId){
-        return  this.bucket.getFilePreview(
-            config.AppwriteBucketId,
-            fileId
-        )
+        try {
+            return  this.bucket.getFilePreview(
+                config.AppwriteBucketId,
+                fileId
+            )
+        } catch (error) {
+            console.log("Appwrite service:: getFilePreview error");
+        }
     }
 }
 

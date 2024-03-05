@@ -13,6 +13,11 @@ export default {
 			},
 		},
     extend: {
+		colors: {
+			prantik : {
+				dark : "#201a31"
+			}
+		},
       		backgroundImage: {
 				"graident-dark":
 					"radial-gradient(76.33% 76.59% at 50.15% 6.06%, #1A1A1A 0%, rgba(26, 26, 26, 0.38) 100%)",
@@ -77,7 +82,8 @@ export default {
 			fontFamily : {
 				"protest_font" : ["Protest Revolution", "sans-serif"],
 				"montserrat" : ["Montserrat", "sans-serif"],
-				"poppins" : ["Poppins", "sans-serif"]
+				"poppins" : ["Poppins", "sans-serif"],
+				"handwritten" : ["Patrick Hand SC", "cursive"]
 			}
 		},
   },

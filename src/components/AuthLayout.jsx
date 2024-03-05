@@ -11,13 +11,13 @@ export default function Protected({children, authentication = true}) {
   
     useEffect(()=>{
         if(authentication && authStatus !== authentication){
-            navigate("/login")
+            navigate('/login')
         }
         else if(!authentication && authStatus !== authentication){
-            navigate("/")
+            navigate('/')
         }
         setLoader(false);
     },[authStatus, navigate,authentication])
 
-    return loader ? <Spin size='large'/> : <>{children}</>
+    return loader ? <Spin size='large'/> : <> {children} </>
 }
