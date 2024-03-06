@@ -6,6 +6,8 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import { toTitleCase } from '../features/toTitleCase'
 import { createdAt } from "../features/createdAt";
+import { toast } from "react-toastify";
+import { Premium } from "../components/index.js"
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -22,7 +24,7 @@ export default function Post() {
                     setPost(post);
                 }
                 else navigate("/");
-            });
+            })
         } else navigate("/");
     }, [slug, navigate]);
 
@@ -31,6 +33,7 @@ export default function Post() {
             if (status) {
                 await appwriteService.deleteFile(post.featuredImage);
                 navigate("/");
+                toast.success("Blog deleted successfully")
             }
         });
     };
@@ -65,9 +68,18 @@ export default function Post() {
                         )}
                     </div>
                 </div>
-                <div className="browser-css text-xl pl-10 text-white py-5">
-                    {parse(post.content)}
-                </div>
+                
+                {
+                    post.isPremium == "premium" ? 
+                    <div className=" min-h-[40vh] flex items-center justify-center">
+                        <Premium />
+                    </div>
+                    :
+                    <div className="browser-css text-xl pl-10 text-white py-5">
+                        {parse(post.content)}
+                    </div> 
+                }
+
             </Container>
         </div>
     ) : null;

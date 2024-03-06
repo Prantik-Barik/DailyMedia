@@ -5,6 +5,7 @@ import {Button, Input, Select, RTE} from "../index"
 import { useSelector } from 'react-redux'
 import appwriteService from '../../appwrite/conf'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function PostForm({ post }) 
 {
@@ -36,6 +37,7 @@ export default function PostForm({ post })
 
             if(dbPost){
                 navigate(`/post/${dbPost.$id}`)
+                toast.success(`${dbPost.title} : Blog updated !!`)
             }
         }
         else
@@ -49,6 +51,7 @@ export default function PostForm({ post })
                 const dbPost = await appwriteService.createPost({ ...data, userId: userData.userData.$id, userName : userData.userData.name });
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`);
+                    toast.success(`${dbPost.title} : Blog posted !!`)
                 }
 
             }

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import authService from '../../appwrite/auth'
 import {logout} from  '../../features/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 function LogoutButton() {
     
@@ -15,6 +16,7 @@ function LogoutButton() {
             dispatch(logout())
             localStorage.removeItem('currentUser')
             navigate('/login')
+            toast.error("Successfully logged out")
         })
         .catch((err)=> console.log(err))
     }

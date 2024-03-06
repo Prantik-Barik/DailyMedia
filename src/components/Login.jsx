@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import authService from '../appwrite/auth'
 import {Button, Input, Logo} from "./index"
+import { toast } from 'react-toastify'
 
 function Login() {
 
@@ -22,6 +23,7 @@ function Login() {
                 if(userData){
                     dispatch(authLogin(userData))
                     localStorage.setItem('currentUser', userData.$id)
+                    toast.success(`DailyBlog Welcomes You! ${userData.name}`)
                 }
                 navigate("/")
             }

@@ -20,8 +20,9 @@ function Signup() {
                 const userData = await authService.getCurrentUser()
                 if(userData) {
                     dispatch(login(userData));
-                    navigate("/")
+                    toast.success(`DailyBlog Welcomes You, ${userData.name}`)
                 }
+                navigate("/")
             }
         } catch (error) {
             setError(error.message)
